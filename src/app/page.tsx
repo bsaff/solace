@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import type { Advocate } from "./types";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { AdvocateCard } from "@/components/AdvocateCard";
 import { NoDataPlaceholder } from "../components/NoResults";
 
@@ -29,8 +28,6 @@ export default function Home() {
         });
     }, 300);
   };
-
-  const onClick = () => {};
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -61,23 +58,6 @@ export default function Home() {
                 className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none ring-brand-accent ring-offset-0 transition focus:border-brand-accent focus:ring-2"
               />
             </div>
-          </div>
-
-          <div className="mt-6 flex items-center gap-3">
-            <Button
-              className="inline-flex items-center justify-center rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-brand-700"
-              onClick={() => {
-                /* Search is live as-you-type for now */
-              }}
-            >
-              SEARCH
-            </Button>
-            <Button
-              className="rounded-lg border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
-              onClick={onClick}
-            >
-              Reset
-            </Button>
           </div>
         </Card>
 
