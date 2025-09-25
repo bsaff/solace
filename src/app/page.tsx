@@ -1,48 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import type { Advocate } from "./types";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { NoDataPlaceholder } from "./components/no-results";
 
 export default function Home() {
-  const [advocates, setAdvocates] = useState<Advocate[]>([]);
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-
-  useEffect(() => {
-    console.log("fetching advocates...");
-    fetch("/api/advocates").then((response) => {
-      response.json().then((jsonResponse) => {
-        setAdvocates(jsonResponse.data);
-        setFilteredAdvocates(jsonResponse.data);
-      });
-    });
-  }, []);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value;
-    setSearchTerm(searchTerm);
+    const value = e.target.value;
+    setSearchTerm(value);
 
-    console.log("filtering advocates...");
-    const filteredAdvocates = advocates.filter((advocate) => {
-      return (
-        advocate.firstName.includes(searchTerm) ||
-        advocate.lastName.includes(searchTerm) ||
-        advocate.city.includes(searchTerm) ||
-        advocate.degree.includes(searchTerm) ||
-        advocate.specialties.includes(searchTerm) ||
-        advocate.yearsOfExperience.toString().includes(searchTerm)
-      );
-    });
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
 
-    setFilteredAdvocates(filteredAdvocates);
+    debounceRef.current = setTimeout(() => {
+      const trimmed = value.trim();
+      fetch(`/api/advocates?search=${encodeURIComponent(trimmed)}`)
+        .then((response) => response.json())
+        .then((jsonResponse) => {
+          setFilteredAdvocates(jsonResponse.data);
+        });
+    }, 300);
   };
 
-  const onClick = () => {
-    console.log(advocates);
-    setFilteredAdvocates(advocates);
-  };
+  const onClick = () => {};
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -57,9 +52,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-4 items-start py-8">
+      <section className="flex flex-col gap-4 items-center p-8 max-w-2xl mx-auto">
         {/* Search Panel */}
-        <Card className="mx-auto max-w-5xl px-6 py-8 w-full">
+        <Card className="px-6 py-8 w-full">
           <div>
             <p className="text-sm font-extrabold tracking-wide text-slate-700">
               SEARCH BY SPECIALTY
@@ -93,40 +88,47 @@ export default function Home() {
           </div>
         </Card>
 
-        <Card className="mx-auto max-w-5xl pb-12">
-          <table className="w-full table-auto text-left rounded-lg overflow-hidden">
-            <thead>
-              <tr className="bg-slate-100 text-slate-700 ">
-                <th className="px-4 py-3">First Name</th>
-                <th className="px-4 py-3">Last Name</th>
-                <th className="px-4 py-3">City</th>
-                <th className="px-4 py-3">Degree</th>
-                <th className="px-4 py-3">Specialties</th>
-                <th className="px-4 py-3">Years of Experience</th>
-                <th className="px-4 py-3">Phone Number</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredAdvocates.map((advocate) => {
-                return (
-                  <tr key={advocate.id} className="border-t border-slate-200">
-                    <td className="px-4 py-3">{advocate.firstName}</td>
-                    <td className="px-4 py-3">{advocate.lastName}</td>
-                    <td className="px-4 py-3">{advocate.city}</td>
-                    <td className="px-4 py-3">{advocate.degree}</td>
-                    <td className="px-4 py-3">
-                      {advocate.specialties.map((s, idx) => (
-                        <div key={idx}>{s}</div>
-                      ))}
-                    </td>
-                    <td className="px-4 py-3">{advocate.yearsOfExperience}</td>
-                    <td className="px-4 py-3">{advocate.phoneNumber}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </Card>
+        {filteredAdvocates.length === 0 ? (
+          <NoDataPlaceholder
+            title="No advocates found"
+            subtitle="Try searching for a different specialty or check your spelling"
+          />
+        ) : (
+          <Card className="mx-auto max-w-5xl pb-12 overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>First Name</TableHead>
+                  <TableHead>Last Name</TableHead>
+                  <TableHead>City</TableHead>
+                  <TableHead>Degree</TableHead>
+                  <TableHead>Specialties</TableHead>
+                  <TableHead>Years of Experience</TableHead>
+                  <TableHead>Phone Number</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredAdvocates.map((advocate) => {
+                  return (
+                    <TableRow key={advocate.id} className="">
+                      <TableCell>{advocate.firstName}</TableCell>
+                      <TableCell>{advocate.lastName}</TableCell>
+                      <TableCell>{advocate.city}</TableCell>
+                      <TableCell>{advocate.degree}</TableCell>
+                      <TableCell>
+                        {advocate.specialties.map((s) => (
+                          <div key={`${advocate.id}-${s}`}>{s}</div>
+                        ))}
+                      </TableCell>
+                      <TableCell>{advocate.yearsOfExperience}</TableCell>
+                      <TableCell>{advocate.phoneNumber}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Card>
+        )}
       </section>
     </main>
   );
