@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -14,13 +15,22 @@ interface AdvocateCardProps {
   advocate: Advocate;
 }
 
-// Generate a random number of patients helped between 1 and 1000
-const generatePatientsHelped = (): number => {
-  return Math.floor(Math.random() * 1000) + 1;
+// Generate a stable number of patients helped based on advocate ID
+const generatePatientsHelped = (advocateId: string): number => {
+  // Use the advocate ID as a seed for consistent "random" generation
+  let hash = 0;
+  for (let i = 0; i < advocateId.length; i++) {
+    const char = advocateId.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return (Math.abs(hash) % 1000) + 1;
 };
 
-export function AdvocateCard({ advocate }: AdvocateCardProps) {
-  const patientsHelped = generatePatientsHelped();
+function AdvocateCardComponent({ advocate }: AdvocateCardProps) {
+  const patientsHelped = generatePatientsHelped(
+    advocate.id?.toString() || advocate.firstName + advocate.lastName,
+  );
 
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow duration-200">
@@ -57,7 +67,7 @@ export function AdvocateCard({ advocate }: AdvocateCardProps) {
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-slate-500" />
               <span className="text-sm text-slate-600">{advocate.city}</span>
@@ -80,3 +90,6 @@ export function AdvocateCard({ advocate }: AdvocateCardProps) {
     </Card>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export const AdvocateCard = memo(AdvocateCardComponent);

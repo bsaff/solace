@@ -1,15 +1,23 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import type { Advocate } from "./types";
 import { Card } from "@/components/ui/card";
 import { AdvocateCard } from "@/components/AdvocateCard";
-import { NoDataPlaceholder } from "../components/NoResults";
+import { NoDataPlaceholder } from "@/components/NoResults";
 
 export default function Home() {
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const advocateCards = useMemo(
+    () =>
+      filteredAdvocates.map((advocate) => (
+        <AdvocateCard key={advocate.id} advocate={advocate} />
+      )),
+    [filteredAdvocates],
+  );
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -37,7 +45,7 @@ export default function Home() {
           <h1 className="text-5xl font-bold font-serif">Solace Advocates</h1>
           <div className="mx-auto mt-4 w-72 border-t border-brand-accent" />
           <p className="mt-4 text-lg opacity-90">
-            Find the right mental health advocate for your needs
+            Find the right health advocate for your needs
           </p>
         </div>
       </section>
@@ -63,15 +71,15 @@ export default function Home() {
 
         {filteredAdvocates.length === 0 ? (
           <NoDataPlaceholder
-            title="No advocates found"
-            subtitle="Try searching for a different specialty or check your spelling"
+            title={searchTerm ? "No advocates found" : undefined}
+            subtitle={
+              searchTerm
+                ? "Try searching for a different specialty or check your spelling"
+                : undefined
+            }
           />
         ) : (
-          <div className="w-full space-y-4">
-            {filteredAdvocates.map((advocate) => (
-              <AdvocateCard key={advocate.id} advocate={advocate} />
-            ))}
-          </div>
+          <div className="w-full space-y-4">{advocateCards}</div>
         )}
       </section>
     </main>

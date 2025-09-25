@@ -27,7 +27,7 @@ export function NoDataPlaceholder({
             </>
           ) : (
             <>
-              <div className="text-gray-400 mb-2">
+              <div className="text-gray-400">
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                   <UserStar className="w-8 h-8 text-gray-400" />
                 </div>
