@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        lora: ["var(--font-lora)", "serif"],
+      },
       colors: {
         brand: {
           "50": "#f0f9f7",

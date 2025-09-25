@@ -40,9 +40,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-50">
       {/* Banner */}
-      <section className="w-full bg-brand-700">
+      <section className="w-full bg-gradient-to-br from-brand-500 to-brand-700">
         <div className="mx-auto max-w-5xl px-6 py-12 text-center text-white">
-          <h1 className="text-5xl font-bold font-serif">Solace Advocates</h1>
+          <h1 className="text-5xl font-semibold font-lora">Solace Advocates</h1>
           <div className="mx-auto mt-4 w-72 border-t border-brand-accent" />
           <p className="mt-4 text-lg opacity-90">
             Find the right health advocate for your needs
