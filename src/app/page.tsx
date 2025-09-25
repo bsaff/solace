@@ -4,15 +4,8 @@ import { useRef, useState } from "react";
 import type { Advocate } from "./types";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { NoDataPlaceholder } from "./components/no-results";
+import { AdvocateCard } from "@/components/AdvocateCard";
+import { NoDataPlaceholder } from "../components/NoResults";
 
 export default function Home() {
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
@@ -52,7 +45,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-4 items-center p-8 max-w-2xl mx-auto">
+      <section className="flex flex-col gap-4 items-center p-8 max-w-4xl mx-auto">
         {/* Search Panel */}
         <Card className="px-6 py-8 w-full">
           <div>
@@ -94,40 +87,11 @@ export default function Home() {
             subtitle="Try searching for a different specialty or check your spelling"
           />
         ) : (
-          <Card className="mx-auto max-w-5xl pb-12 overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>First Name</TableHead>
-                  <TableHead>Last Name</TableHead>
-                  <TableHead>City</TableHead>
-                  <TableHead>Degree</TableHead>
-                  <TableHead>Specialties</TableHead>
-                  <TableHead>Years of Experience</TableHead>
-                  <TableHead>Phone Number</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredAdvocates.map((advocate) => {
-                  return (
-                    <TableRow key={advocate.id} className="">
-                      <TableCell>{advocate.firstName}</TableCell>
-                      <TableCell>{advocate.lastName}</TableCell>
-                      <TableCell>{advocate.city}</TableCell>
-                      <TableCell>{advocate.degree}</TableCell>
-                      <TableCell>
-                        {advocate.specialties.map((s) => (
-                          <div key={`${advocate.id}-${s}`}>{s}</div>
-                        ))}
-                      </TableCell>
-                      <TableCell>{advocate.yearsOfExperience}</TableCell>
-                      <TableCell>{advocate.phoneNumber}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </Card>
+          <div className="w-full space-y-4">
+            {filteredAdvocates.map((advocate) => (
+              <AdvocateCard key={advocate.id} advocate={advocate} />
+            ))}
+          </div>
         )}
       </section>
     </main>
