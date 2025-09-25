@@ -9,5 +9,3 @@ export type Advocate = {
   phoneNumber: number;
   createdAt?: string | Date;
 };
-
-
