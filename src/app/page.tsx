@@ -3,7 +3,7 @@
 import { useRef, useState, useMemo } from "react";
 import type { Advocate } from "./types";
 import { Card } from "@/components/ui/card";
-import { AdvocateCard } from "@/components/AdvocateCard";
+import AdvocateCard from "@/components/advocate-card";
 import { NoDataPlaceholder } from "@/components/NoResults";
 
 export default function Home() {

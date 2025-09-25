@@ -16,7 +16,6 @@
 
 ### UX Details
 * Handle **loading** and **error states** gracefully.
-* Format phone numbers consistently.
 * Truncate long specialties list with an expand button.
 * (Optional) Refactor to **shared input/form components** for consistency.
 
