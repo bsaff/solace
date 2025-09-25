@@ -23,14 +23,9 @@ export function AdvocateCard({ advocate }: AdvocateCardProps) {
               {advocate.firstName} {advocate.lastName}
             </h3>
             <div className="flex items-center gap-1 text-slate-500">
-              <MapPin className="w-4 h-4" />
-              <span className="text-sm">{advocate.city}</span>
+              <GraduationCap className="w-4 h-4 text-slate-500" />
+              <span className="text-sm text-slate-600">{advocate.degree}</span>
             </div>
-          </div>
-
-          <div className="flex items-center gap-2 mb-3">
-            <GraduationCap className="w-4 h-4 text-slate-500" />
-            <span className="text-sm text-slate-600">{advocate.degree}</span>
           </div>
 
           <div className="flex items-center gap-2 mb-4">
@@ -48,11 +43,17 @@ export function AdvocateCard({ advocate }: AdvocateCardProps) {
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-slate-500" />
-            <span className="text-sm text-slate-600">
-              {advocate.phoneNumber}
-            </span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-slate-500" />
+              <span className="text-sm text-slate-600">{advocate.city}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Phone className="w-4 h-4 text-slate-500" />
+              <span className="text-sm text-slate-600">
+                {advocate.phoneNumber}
+              </span>
+            </div>
           </div>
         </div>
       </div>
