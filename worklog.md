@@ -16,3 +16,4 @@ Worklog
 - Sort by years of experience
 - Improve <AdvocateCard /> information organization
   - Add number of patients helped
+- Moved advocate filtering to the db layer, add simple cache

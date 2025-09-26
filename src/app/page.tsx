@@ -43,8 +43,10 @@ export default function Home() {
       {/* Banner */}
       <section className="w-full bg-gradient-to-br from-brand-500 to-brand-700">
         <div className="px-6 py-12 flex flex-col items-center gap-4 text-white">
-          <h1 className="text-5xl font-lora">Solace Advocates</h1>
-          <Sun className="text-brand-accent" />
+          <div className="flex gap-2">
+            <Sun className="text-brand-accent w-12 h-12" />
+            <h1 className="text-5xl font-lora">Solace Advocates</h1>
+          </div>
           <p className="text-lg opacity-90">
             Find the right health advocate for your needs
           </p>

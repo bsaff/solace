@@ -7,7 +7,7 @@
 
 ---
 
-# Frontend
+# Frontend to-dos
 
 ### Optimizations
 * Use **React Query or SWR** to cache repeat searches.
@@ -21,8 +21,8 @@
 
 ---
 
-# Backend
-* Cache responses for identical search inputs (LRU in demo, Redis in production).
+# Backend to-dos
+* Cache responses for identical search inputs (Upstash in production).
 * Explore **Postgres text vectorization**:
   * Flatten specialties into text fields.
   * Tokenized indexing for fast reverse lookups.
@@ -31,8 +31,9 @@
 ---
 
 # Product Thoughts
-* **Trust** is the most important factor for patients; they can be in an extremely vulnerable, and need expertise, experience, and compassion.
+* **Trust** is the one of the most important factor for patients in advocate selection; they are vulnerable, and need someone with expertise, experience, and compassion to help them through their medical journey.
   * Trust communicated via `yearsOfExperience` and listed **specialties**.
+  * An advocate's personality or helping style could be an interesting thing to model and represent to users.
 * **Specialty overload**: future iterations should emphasize **primary specialties** to ease user's decision making.
 
 ---
