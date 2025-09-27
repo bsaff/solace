@@ -4,7 +4,7 @@ import { useRef, useState, useMemo } from "react";
 import type { Advocate } from "./types";
 import { Card } from "@/components/ui/card";
 import AdvocateCard from "@/components/advocate-card";
-import { NoDataPlaceholder } from "@/components/NoResults";
+import { NoDataPlaceholder } from "@/components/no-results";
 import { Sun } from "lucide-react";
 
 export default function Home() {
