@@ -13,11 +13,14 @@
 * Use **React Query or SWR** to cache repeat searches.
 * Add **predictive autocomplete** from common specialties.
 * Trigger search **on button click** or predicted specialty selection.
+* Cleanup timeout reference on unmount
 
 ### UX Details
 * Handle **loading** and **error states** gracefully.
 * Truncate long specialties list with an expand button.
 * (Optional) Refactor to **shared input/form components** for consistency.
+
+
 
 ---
 
