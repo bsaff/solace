@@ -25,9 +25,9 @@ const advocates = pgTable(
   },
   (table) => ({
     yearsOfExperienceIndex: index("years_of_experience_index").on(
-      table.yearsOfExperience,
+      table.yearsOfExperience
     ),
-  }),
+  })
 );
 
 export { advocates };

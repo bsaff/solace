@@ -3,7 +3,7 @@ import { advocates } from "../../../db/schema";
 import { desc, sql } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 
-const getAdvocates = async (rawSearch: string) => {
+const getAdvocates = (rawSearch: string) => {
   const search = rawSearch.toLowerCase();
   const cacheKey = search ? `advocates-search-${search}` : "advocates-all";
 
@@ -33,7 +33,7 @@ const getAdvocates = async (rawSearch: string) => {
       return await query;
     },
     [cacheKey],
-    { revalidate: 60, tags: ["advocates"] },
+    { revalidate: 60, tags: ["advocates"] }
   )();
 };
 

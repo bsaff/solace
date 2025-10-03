@@ -11,62 +11,62 @@ import {
 import type { Advocate } from "@/app/types";
 import { formatPhoneNumber, generatePatientsHelped } from "./utils";
 
-interface AdvocateCardProps {
+type AdvocateCardProps = {
   advocate: Advocate;
-}
+};
 
 function AdvocateCard({ advocate }: AdvocateCardProps) {
   const patientsHelped = generatePatientsHelped();
 
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow duration-200">
+    <Card className="p-6 transition-shadow duration-200 hover:shadow-lg">
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-full bg-brand-100/70 flex items-center justify-center">
-            <User className="w-8 h-8 text-brand-600" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-100/70">
+            <User className="h-8 w-8 text-brand-600" />
           </div>
         </div>
 
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-2">
-            <h3 className="text-lg font-semibold text-slate-900">
+        <div className="min-w-0 flex-1">
+          <div className="mb-2 flex items-center gap-2">
+            <h3 className="font-semibold text-lg text-slate-900">
               {advocate.firstName} {advocate.lastName}
             </h3>
             <div className="flex items-center gap-1 text-slate-500">
-              <GraduationCap className="w-4 h-4 text-slate-500" />
-              <span className="text-sm text-slate-600">{advocate.degree}</span>
+              <GraduationCap className="h-4 w-4 text-slate-500" />
+              <span className="text-slate-600 text-sm">{advocate.degree}</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 mb-4">
-            <Calendar className="w-4 h-4 text-brand-500" />
-            <span className="text-sm font-medium text-brand-600">
+          <div className="mb-4 flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-brand-500" />
+            <span className="font-medium text-brand-600 text-sm">
               {advocate.yearsOfExperience} years of experience
             </span>
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="mb-4 flex flex-wrap gap-2">
             {advocate.specialties.map((specialty) => (
-              <Badge key={specialty} variant="secondary" className="text-xs">
+              <Badge className="text-xs" key={specialty} variant="secondary">
                 {specialty}
               </Badge>
             ))}
           </div>
 
-          <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-slate-500" />
-              <span className="text-sm text-slate-600">{advocate.city}</span>
+              <MapPin className="h-4 w-4 text-slate-500" />
+              <span className="text-slate-600 text-sm">{advocate.city}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Phone className="w-4 h-4 text-slate-500" />
-              <span className="text-sm text-slate-600">
+              <Phone className="h-4 w-4 text-slate-500" />
+              <span className="text-slate-600 text-sm">
                 {formatPhoneNumber(advocate.phoneNumber)}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <MedalIcon className="w-4 h-4 text-green-500" />
-              <span className="text-sm text-green-600 font-medium">
+              <MedalIcon className="h-4 w-4 text-green-500" />
+              <span className="font-medium text-green-600 text-sm">
                 {patientsHelped}+ patients helped
               </span>
             </div>

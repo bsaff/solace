@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noMagicNumbers: N/A */
 export const formatPhoneNumber = (phoneNumber: number): string => {
   const phoneStr = phoneNumber.toString();
   if (phoneStr.length === 10) {
@@ -6,6 +7,5 @@ export const formatPhoneNumber = (phoneNumber: number): string => {
   return phoneStr;
 };
 
-export const generatePatientsHelped = (): number => {
-  return Math.floor(Math.random() * 1000) + 1;
-};
+export const generatePatientsHelped = (): number =>
+  Math.floor(Math.random() * 1000) + 1;
