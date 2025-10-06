@@ -1,7 +1,8 @@
 # Assumptions
-* Patients will primarily search by **type of health problem**.
+* Patients are the main users
+* Patients will primarily search by their **health problem**.
 * `yearsOfExperience` is a strong trust signal; results can be **sorted by experience** rather than user-controlled.
-* Advocate services are assumed to be **remote (U.S.-based)**, so location isn’t critical.
+* Advocate services are assumed to be **remote (U.S.-based)**, so location isn’t a critical detail.
 * Degrees may not be a key factor; advocates are already screened by Solace.
 * Browsing unfiltered results isn’t very useful; better to start with a **search input**.
 
@@ -13,14 +14,12 @@
 * Add Pagination support / progressively loading results on scroll
 * Use **React Query or SWR** to cache repeat searches.
 * Add **predictive autocomplete** from common specialties.
-* Trigger search **on button click** or predicted specialty selection.
+* Trigger search on button click or predicted specialty selection.
 * Cleanup timeout reference on unmount
 
 ### UX Details
 * Handle **loading** and **error states** gracefully.
 * Truncate long specialties list with an expand button.
-* (Optional) Refactor to **shared input/form components** for consistency.
-
 
 
 ---
