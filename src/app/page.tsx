@@ -88,11 +88,11 @@ export default function Home() {
         ) : (
           <div className="w-full">
             <Virtuoso
-              style={{ height: "calc(100vh - 350px)" }}
+              className="scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
               data={filteredAdvocates}
               itemContent={itemContent}
               overscan={3}
-              className="scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
+              style={{ height: "calc(100vh - 350px)" }}
             />
           </div>
         )}
