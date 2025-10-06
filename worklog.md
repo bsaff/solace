@@ -1,0 +1,19 @@
+Worklog
+- Init repo
+- Install docker
+- Setup db
+- Wire db to client
+- page.tsx fixes
+  - add Advocate type
+  - add key to rendering of advocate result.
+  - use component state for search term
+- install biome, shadcn components
+- Plan improved search
+  - specialty input, debounced search
+  - update backend to accept params
+- Improve result rendering with <AdvocateCard />
+- Add no results state
+- Sort by years of experience
+- Improve <AdvocateCard /> information organization
+  - Add number of patients helped
+- Moved advocate filtering to the db layer, add simple cache
