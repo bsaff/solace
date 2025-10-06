@@ -1,9 +1,9 @@
 import db from "../../../db";
 import { advocates } from "../../../db/schema";
-import { desc, sql } from "drizzle-orm";
+import { asc, desc, sql } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 
-const getAdvocates = (rawSearch: string) => {
+const getAdvocates = (rawSearch: string, sortField, sortDirection) => {
   const search = rawSearch.toLowerCase();
   const cacheKey = search ? `advocates-search-${search}` : "advocates-all";
 
@@ -11,10 +11,12 @@ const getAdvocates = (rawSearch: string) => {
     async () => {
       console.log("🔥 Hitting the database...");
 
-      let query = db
-        .select()
-        .from(advocates)
-        .orderBy(desc(advocates.yearsOfExperience));
+      const sort =
+        sortDirection === "asc"
+          ? asc(advocates[sortField])
+          : desc(advocates[sortField]);
+
+      let query = db.select().from(advocates).orderBy(sort);
 
       if (search) {
         const pattern = `%${search}%`;
@@ -40,6 +42,8 @@ const getAdvocates = (rawSearch: string) => {
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const search = url.searchParams.get("search")?.trim() ?? "";
-  const data = await getAdvocates(search);
+  const sortField = url.searchParams.get("sortField")?.trim() ?? "firstName";
+  const sortDirection = url.searchParams.get("sortDirection")?.trim() ?? "desc";
+  const data = await getAdvocates(search, sortField, sortDirection);
   return Response.json({ data });
 }

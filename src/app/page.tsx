@@ -1,15 +1,25 @@
+/** biome-ignore-all assist/source/useSortedAttributes: <explanation> */
 "use client";
 
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import type { Advocate } from "./types";
 import { Card } from "@/components/ui/card";
 import AdvocateCard from "@/components/advocate-card";
 import { NoDataPlaceholder } from "@/components/no-results";
 import { Sun } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Home() {
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sort, setSort] = useState<string>("asc");
+  const [sortField, setSortField] = useState<string>("lastName");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const advocateCards = useMemo(
@@ -38,6 +48,14 @@ export default function Home() {
         });
     }, DEBOUNCE_DELAY);
   };
+
+  const handleSelectChange = (val: string) => {
+    setSort(val);
+  };
+
+  useEffect(() => {
+    // Send to backend
+  }, [sort, sortField, filteredAdvocates]);
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -70,6 +88,31 @@ export default function Home() {
                 value={searchTerm}
               />
             </div>
+          </div>
+          <div className="py-2 flex gap-2">
+            <Select
+              onValueChange={handleSelectChange}
+              value={sortField}
+              defaultValue="lastName"
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Sort by..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="firstName">First Name</SelectItem>
+                <SelectItem value="lastName">Last Name</SelectItem>
+                <SelectItem value="city">City</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select onValueChange={handleSelectChange} value={sort}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Sort direction" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="desc">Descending</SelectItem>
+                <SelectItem value="asc">Ascending</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </Card>
 
