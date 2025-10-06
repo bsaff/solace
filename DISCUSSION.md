@@ -16,6 +16,7 @@
 * Add **predictive autocomplete** from common specialties.
 * Trigger search on button click or predicted specialty selection.
 * Cleanup timeout reference on unmount
+* React Virtuoso for rendering advocate cards (for real data, 100+ results)
 
 ### UX Details
 * Handle **loading** and **error states** gracefully.
