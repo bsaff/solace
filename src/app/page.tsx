@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useCallback } from "react";
+import { Virtuoso } from "react-virtuoso";
 import type { Advocate } from "./types";
 import { Card } from "@/components/ui/card";
 import AdvocateCard from "@/components/advocate-card";
@@ -12,12 +13,14 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const advocateCards = useMemo(
-    () =>
-      filteredAdvocates.map((advocate) => (
+  // Item renderer for Virtuoso
+  const itemContent = useCallback(
+    (index: number, advocate: Advocate) => (
+      <div className="pb-4">
         <AdvocateCard advocate={advocate} key={advocate.id} />
-      )),
-    [filteredAdvocates]
+      </div>
+    ),
+    []
   );
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +86,15 @@ export default function Home() {
             title={searchTerm ? "No advocates found" : undefined}
           />
         ) : (
-          <div className="w-full space-y-4">{advocateCards}</div>
+          <div className="w-full">
+            <Virtuoso
+              style={{ height: "calc(100vh - 350px)" }}
+              data={filteredAdvocates}
+              itemContent={itemContent}
+              overscan={3}
+              className="scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
+            />
+          </div>
         )}
       </section>
     </main>
